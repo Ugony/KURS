@@ -6,7 +6,9 @@ import org.apache.poi.xwpf.usermodel.XWPFRun;
 
 public class RunningApplication extends PC_Info {
 
-    enum Parameters {
+    private static final String powershell = "powershell \"gps | where  {$_.MainWindowTitle }";
+
+    enum RunningParameters {
         ProcessName, Handles, NPM, PM, WS, CPU, Id, SI
     }
 
@@ -17,7 +19,13 @@ public class RunningApplication extends PC_Info {
         XWPFRun run = paragraph.createRun();
         run.setText("\n *********************** Running Apps Information ***********************  ");
 
-        getFullInfoAboutCurrentParameter("powershell \"gps | where  {$_.MainWindowTitle } | Select ", Parameters.values(), document);
+        getFullInfoAboutCurrentParameter(powershell + " | Select ", RunningParameters.values(), document);
 
     }
+
+    @Override
+    public void showComponent() {
+        getCommandOutput(powershell);
+    }
+
 }

@@ -16,12 +16,12 @@ public abstract class PC_Info {
     public void getFullInfoAboutCurrentParameter(
             String command,
             Enum[] values,
-             XWPFDocument document) {
+            XWPFDocument document) {
         try {
 
             // Writing the Document in file system
             FileOutputStream out = new FileOutputStream(
-                    new File("C:/Projects/create_table.docx"));
+                    new File("C:/Projects/SuperPuperPC_INFO.docx"));
 
             // Creating a table
             XWPFTable table = document.createTable();
@@ -38,18 +38,14 @@ public abstract class PC_Info {
                 XWPFTableRow tableRow = table.getRow(i);
                 tableRow.getCell(0).setText(values[i].name());
 
-                Process process = Runtime.getRuntime().exec(
-                        command + " " + values[i].name());
-
-                process.getOutputStream().close();
-                Scanner sc = new Scanner(process.getInputStream());
+                Scanner sc = runCommand(command, values[i].name());
 
                 int counter = 1;
                 while (sc.hasNextLine()) {
                     String next = sc.nextLine();
 
                     if (!next.contains(values[i].name()) && !StringUtils.isBlank(next.trim())) {
-                        if (tableRow.getCell(counter) == null ) {
+                        if (tableRow.getCell(counter) == null) {
                             tableRow.createCell();
                         }
                         tableRow.getCell(counter).setText(next);
@@ -57,6 +53,8 @@ public abstract class PC_Info {
                     }
 
                 }
+                sc.close();
+
 
             }
             System.out.println(stringBuilder);
@@ -69,6 +67,31 @@ public abstract class PC_Info {
 
     }
 
+    protected Scanner runCommand(String command, String name) throws IOException {
+        Process process = Runtime.getRuntime().exec(
+                command + " " + name);
+
+        process.getOutputStream().close();
+        return new Scanner(process.getInputStream());
+    }
+
     public abstract void writeToDocument(XWPFDocument document) throws IOException;
+
+    protected void getCommandOutput(String command) {
+            try {
+                Scanner sc = runCommand(command, "");
+                while (sc.hasNextLine()) {
+                    String nextLine = sc.nextLine();
+                    if (!StringUtils.isBlank(nextLine.trim())) System.out.println(nextLine);
+                }
+                sc.close();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+    }
+
+    public abstract void showComponent();
+
+
 
 }

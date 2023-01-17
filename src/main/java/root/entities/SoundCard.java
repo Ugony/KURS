@@ -1,12 +1,17 @@
 package root.entities;
 
 import java.io.IOException;
+import java.util.Arrays;
 
 import org.apache.poi.xwpf.usermodel.XWPFDocument;
 import org.apache.poi.xwpf.usermodel.XWPFParagraph;
 import org.apache.poi.xwpf.usermodel.XWPFRun;
 
 public class SoundCard extends PC_Info {
+
+    private static final String wmic_sounddev_get = "wmic sounddev";
+
+
     enum SoundCard_Parameters {
         Availability,
         Caption,
@@ -42,16 +47,14 @@ public class SoundCard extends PC_Info {
 
         System.out.println(
                 "\n *********************** SoundCard Information ***********************  ");
-        getFullInfoAboutCurrentParameter("wmic sounddev get", SoundCard_Parameters.values(),  document);
-        //       System.out.println(get());
+        getFullInfoAboutCurrentParameter(wmic_sounddev_get + " get", SoundCard_Parameters.values(),  document);
 
     }
 
+
+    @Override
+    public void showComponent() {
+        getCommandOutput(wmic_sounddev_get);
+    }
+
 }
-
-
-//    private static StringBuilder get() {
-//        SystemInfo systemInfo = new SystemInfo();
-//        return new StringBuilder().append(systemInfo.getHardware().getUsbDevices(false));
-//    }
-//}

@@ -1,7 +1,6 @@
 package root.entities;
 
 
-
 import java.io.IOException;
 
 import org.apache.poi.xwpf.usermodel.XWPFDocument;
@@ -10,15 +9,15 @@ import org.apache.poi.xwpf.usermodel.XWPFRun;
 
 
 public class GraphicCard extends PC_Info {
+
+    private static final String wmic_path_Win32_Videocontroller_get = "wmic path Win32_Videocontroller ";
+
     enum GraphicCard_Parameters {
-//        AcceleratorCapabilities,
         AdapterCompatibility,
         AdapterDACType,
         AdapterRAM,
         Availability,
-//        CapabilityDescriptions,
         Caption,
-//        ColorTableEntries,
         ConfigManagerErrorCode,
         ConfigManagerUserConfig,
         CreationClassName,
@@ -32,42 +31,22 @@ public class GraphicCard extends PC_Info {
         CurrentVerticalResolution,
         Description,
         DeviceID,
-//        DeviceSpecificPens,
         DitherType,
         DriverDate,
         DriverVersion,
-//        ErrorCleared,
-//        ErrorDescription,
-//        ICMIntent,
-//        ICMMethod,
         InfFilename,
         InfSection,
-//        InstallDate,
         InstalledDisplayDrivers,
-//        LastErrorCode,
-//        MaxMemorySupported,
-//        MaxNumberControlled,
         MaxRefreshRate,
         MinRefreshRate,
         Monochrome,
         Name,
-//        NumberOfColorPlanes,
-//        NumberOfVideoPages,
         PNPDeviceID,
-//        PowerManagementCapabilities,
-//        PowerManagementSupported,
-//        ProtocolSupported,
-//        ReservedSystemPaletteEntries,
-//        SpecificationVersion,
         Status,
-//        StatusInfo,
         SystemCreationClassName,
         SystemName,
-//        SystemPaletteEntries,
-//        TimeOfLastReset,
         VideoArchitecture,
         VideoMemoryType,
-//        VideoMode,
         VideoModeDescription,
         VideoProcessor
 
@@ -82,8 +61,16 @@ public class GraphicCard extends PC_Info {
 
         System.out.println(
                 "\n *********************** GraphicCard Information ***********************  ");
-        getFullInfoAboutCurrentParameter("wmic path Win32_Videocontroller get", GraphicCard_Parameters.values(), document);
+        getFullInfoAboutCurrentParameter(wmic_path_Win32_Videocontroller_get +
+                "get",
+                GraphicCard_Parameters.values(),
+                document);
 
+    }
+
+    @Override
+    public void showComponent() {
+        getCommandOutput(wmic_path_Win32_Videocontroller_get);
     }
 
 }

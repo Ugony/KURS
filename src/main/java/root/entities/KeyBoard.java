@@ -7,6 +7,9 @@ import org.apache.poi.xwpf.usermodel.XWPFParagraph;
 import org.apache.poi.xwpf.usermodel.XWPFRun;
 
 public class KeyBoard extends PC_Info {
+
+    private static final String wmic_path_Win32_Keyboard_get = "wmic path Win32_Keyboard ";
+
     enum KeyBoard_Parameters {
         Availability,
         Caption,
@@ -43,9 +46,14 @@ public class KeyBoard extends PC_Info {
 
         System.out.println(
                 "\n *********************** Keyboard Information ***********************  ");
-        getFullInfoAboutCurrentParameter("wmic path Win32_Keyboard get", KeyBoard_Parameters.values(),  document);
+        getFullInfoAboutCurrentParameter(wmic_path_Win32_Keyboard_get + "get", KeyBoard_Parameters.values(),  document);
 //        System.out.println(get());
 
+    }
+
+    @Override
+    public void showComponent() {
+        getCommandOutput(wmic_path_Win32_Keyboard_get);
     }
 
 }

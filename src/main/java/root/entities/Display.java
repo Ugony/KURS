@@ -7,6 +7,9 @@ import org.apache.poi.xwpf.usermodel.XWPFParagraph;
 import org.apache.poi.xwpf.usermodel.XWPFRun;
 
 public class Display extends PC_Info {
+
+    private static final String wmic_path_Win32_DesktopMonitor_get = "wmic path Win32_DesktopMonitor ";
+
     enum Display_Parameters {
         Availability,
         Bandwidth,
@@ -48,16 +51,16 @@ public class Display extends PC_Info {
 
         System.out.println(
                 "\n *********************** Display Desktop Information ***********************  ");
-       getFullInfoAboutCurrentParameter("wmic path Win32_DesktopMonitor get", Display_Parameters.values(),  document);
-   //  System.out.println(get());
+       getFullInfoAboutCurrentParameter(wmic_path_Win32_DesktopMonitor_get + "get", Display_Parameters.values(),  document);
 
     }
-//
-//    private static StringBuilder get(){
-//        SystemInfo systemInfo = new SystemInfo();
-//
-//        return new StringBuilder().append(systemInfo.getHardware().getDisplays());
-//    }
+
+    @Override
+    public void showComponent() {
+        getCommandOutput(wmic_path_Win32_DesktopMonitor_get);
+    }
+
 }
+
 
 

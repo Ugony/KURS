@@ -7,6 +7,10 @@ import org.apache.poi.xwpf.usermodel.XWPFParagraph;
 import org.apache.poi.xwpf.usermodel.XWPFRun;
 
 public class HardwareDisk extends PC_Info {
+
+    private static final String wmic_diskdrive_get = "wmic diskdrive ";
+
+
     enum HDD_Parameters {
         Availability,
         BytesPerSector,
@@ -69,7 +73,13 @@ public class HardwareDisk extends PC_Info {
         run.setText("\n *********************** HardwareDisk Information ***********************  ");
 
         System.out.println("\n *********************** HardDrive Information ***********************  ");
-        getFullInfoAboutCurrentParameter("wmic diskdrive get", HDD_Parameters.values(),  document);
+        getFullInfoAboutCurrentParameter(wmic_diskdrive_get + "get", HDD_Parameters.values(),  document);
 
     }
+
+    @Override
+    public void showComponent() {
+        getCommandOutput(wmic_diskdrive_get);
+    }
+
 }

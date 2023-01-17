@@ -1,12 +1,16 @@
 package root.entities;
 
 import java.io.IOException;
+import java.util.Scanner;
 
 import org.apache.poi.xwpf.usermodel.XWPFDocument;
 import org.apache.poi.xwpf.usermodel.XWPFParagraph;
 import org.apache.poi.xwpf.usermodel.XWPFRun;
 
 public class BaseBoard extends PC_Info {
+
+    private static final String wmic_baseboard_get = "wmic baseboard";
+
     enum BaseBoard_Parameters {
         Caption,
         ConfigOptions,
@@ -50,8 +54,17 @@ public class BaseBoard extends PC_Info {
 
         System.out.println(
                 "\n *********************** BaseBoard Information ***********************  ");
-        getFullInfoAboutCurrentParameter("wmic baseboard get", BaseBoard_Parameters.values(),  document);
 
+        getFullInfoAboutCurrentParameter(
+                wmic_baseboard_get + " get",
+                BaseBoard_Parameters.values(),
+                document);
+
+    }
+
+    @Override
+    public void showComponent() {
+        getCommandOutput(wmic_baseboard_get);
     }
 }
 

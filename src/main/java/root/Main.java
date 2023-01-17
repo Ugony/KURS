@@ -1,7 +1,8 @@
 package root;
 
 import root.entities.PC_Info;
-import root.utils.*;
+import root.utils.Component;
+import root.utils.Factory;
 
 import java.io.IOException;
 import java.time.Duration;
@@ -18,14 +19,60 @@ import org.apache.poi.xwpf.usermodel.XWPFDocument;
 public class Main {
 
     public static void main(String[] args) throws IOException {
+       A: while (true) {
+            inputDigits();
+            Integer m = null;
+            do {
+                Scanner scanner = new Scanner(System.in);
+                String s = scanner.nextLine().trim();
+                if (!s.matches("[0-9]*")) {
+                    if (s.equalsIgnoreCase("G")) break A;
+                    System.out.println("Необходимо ввести число. Введите еще раз: ");
+                    break;
+                }
+
+                m = Integer.parseInt(s);
+                if (m < 0 || m > 14) {
+                    System.out.println("Введено неправильное число. Введите еще раз: ");
+                    m = null;
+                }
+            } while (m == null);
+            if (m != null) {
+                getInfo(m);
+            }
+
+        }
+    }
+
+    private static void getInfo(int number) throws IOException{
+        if (number == 14) {
+            createFile();
+        } else if (number == 12) {
+            showUserLOGONTime();
+        } else if (number == 13) {
+            showWindowsWorkTime();
+        }
+        for (Component value : Component.values()) {
+            if (value.ordinal() == number) {
+                showComponent(value);
+            }
+        }
+    }
+
+
+    private static void showComponent(Component component) {
+        Factory factory = new Factory();
+        factory.getComponents(component).showComponent();
+    }
+
+    private static void createFile() throws IOException {
         Factory factory = new Factory();
         XWPFDocument document = new XWPFDocument();
         for (Component value : Component.values()) {
             PC_Info components = factory.getComponents(value);
             components.writeToDocument(document);
         }
-        showWindowsWorkTime();
-        showUserLOGONTime();
+
     }
 
     public static void showWindowsWorkTime() throws IOException {
@@ -106,6 +153,19 @@ public class Main {
                         + " minutes, "
                         + (difference_In_Seconds % 60)
                         + " seconds");
+    }
+
+    private static void inputDigits() {
+        System.out.println("\nHello, daragoi!\n");
+        for (Component value : Component.values()) {
+            System.out.println(value.ordinal() + " - " + value);
+        }
+        System.out.println(
+                "12 - Информация о времени, проведенном юзером в системе\n" +
+                        "13 - Информация о времени работы системы\n" +
+                        "14 - Сохранить всю информацию в файл. Вывод файла осуществляется в C:/Projects/SuperPuperPC_INFO.docx\n" +
+                        "Нажмите 'G', чтобы выйти.\n" +
+                        "Введите число для вывода информации на экран:");
     }
 
 
