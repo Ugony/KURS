@@ -9,7 +9,7 @@ import org.apache.poi.xwpf.usermodel.XWPFRun;
 
 public class SoundCard extends PC_Info {
 
-    private static final String wmic_sounddev_get = "wmic sounddev";
+    private static final String wmic_sounddev_get = "wmic sounddev get ";
 
 
     enum SoundCard_Parameters {
@@ -47,14 +47,14 @@ public class SoundCard extends PC_Info {
 
         System.out.println(
                 "\n *********************** SoundCard Information ***********************  ");
-        getFullInfoAboutCurrentParameter(wmic_sounddev_get + " get", SoundCard_Parameters.values(),  document);
+        getFullInfoAboutCurrentParameter(wmic_sounddev_get, SoundCard_Parameters.values(), document);
 
     }
 
 
     @Override
     public void showComponent() {
-        getCommandOutput(wmic_sounddev_get);
+        getCommandOutput(wmic_sounddev_get+ "* /format:list");
     }
 
 }

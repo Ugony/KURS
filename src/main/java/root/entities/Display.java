@@ -8,7 +8,7 @@ import org.apache.poi.xwpf.usermodel.XWPFRun;
 
 public class Display extends PC_Info {
 
-    private static final String wmic_path_Win32_DesktopMonitor_get = "wmic path Win32_DesktopMonitor ";
+    private static final String wmic_path_Win32_DesktopMonitor_get = "wmic path Win32_DesktopMonitor get ";
 
     enum Display_Parameters {
         Availability,
@@ -51,13 +51,13 @@ public class Display extends PC_Info {
 
         System.out.println(
                 "\n *********************** Display Desktop Information ***********************  ");
-       getFullInfoAboutCurrentParameter(wmic_path_Win32_DesktopMonitor_get + "get", Display_Parameters.values(),  document);
+       getFullInfoAboutCurrentParameter(wmic_path_Win32_DesktopMonitor_get, Display_Parameters.values(), document);
 
     }
 
     @Override
     public void showComponent() {
-        getCommandOutput(wmic_path_Win32_DesktopMonitor_get);
+        getCommandOutput(wmic_path_Win32_DesktopMonitor_get  + "* /format:list");
     }
 
 }

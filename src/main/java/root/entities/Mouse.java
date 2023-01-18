@@ -8,7 +8,7 @@ import org.apache.poi.xwpf.usermodel.XWPFRun;
 
 public class Mouse extends PC_Info {
 
-    private static final String wmic_path_Win32_PointingDevice_get = "wmic path Win32_PointingDevice ";
+    private static final String wmic_path_Win32_PointingDevice_get = "wmic path Win32_PointingDevice get ";
 
     enum Mouse_parameters {
         Availability,
@@ -56,13 +56,13 @@ public class Mouse extends PC_Info {
 
         System.out.println(
                 "\n *********************** Mouse Information ***********************  ");
-        getFullInfoAboutCurrentParameter(wmic_path_Win32_PointingDevice_get + "get", Mouse_parameters.values(),  document);
+        getFullInfoAboutCurrentParameter(wmic_path_Win32_PointingDevice_get, Mouse_parameters.values(),  document);
 
     }
 
     @Override
     public void showComponent() {
-        getCommandOutput(wmic_path_Win32_PointingDevice_get);
+        getCommandOutput(wmic_path_Win32_PointingDevice_get + "* /format:list");
     }
 
 }

@@ -8,7 +8,7 @@ import org.apache.poi.xwpf.usermodel.XWPFRun;
 
 public class HDDPartition extends PC_Info {
 
-    private static final String wmic_partition_get = "wmic partition ";
+    private static final String wmic_partition_get = "wmic partition get ";
 
     enum HDDPartition_Parameters {
         Access,
@@ -56,13 +56,13 @@ public class HDDPartition extends PC_Info {
 
 
         System.out.println("\n *********************** Information about the partitions of HardDrive  ***********************  ");
-        getFullInfoAboutCurrentParameter(wmic_partition_get + "get", HDDPartition_Parameters.values(),  document);
+        getFullInfoAboutCurrentParameter(wmic_partition_get , HDDPartition_Parameters.values(),  document);
 
     }
 
     @Override
     public void showComponent() {
-        getCommandOutput(wmic_partition_get);
+        getCommandOutput(wmic_partition_get + "* /format:list");
     }
 
 }

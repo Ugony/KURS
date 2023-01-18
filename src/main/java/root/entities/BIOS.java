@@ -6,7 +6,7 @@ import org.apache.poi.xwpf.usermodel.XWPFRun;
 
 public class BIOS extends PC_Info {
 
-    private static final String wmic_bios_get = "wmic bios ";
+    private static final String wmic_bios_get = "wmic bios get ";
 
     enum Parameters {
         BiosCharacteristics,
@@ -51,13 +51,13 @@ public class BIOS extends PC_Info {
 
 
         System.out.println("\n *********************** BIOS Information ***********************  ");
-        getFullInfoAboutCurrentParameter(wmic_bios_get + "get", Parameters.values(),  document);
+        getFullInfoAboutCurrentParameter(wmic_bios_get, Parameters.values(),  document);
 
     }
 
     @Override
     public void showComponent() {
-        getCommandOutput(wmic_bios_get);
+        getCommandOutput(wmic_bios_get + "* /format:list");
     }
 
 }

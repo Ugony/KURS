@@ -8,7 +8,7 @@ import org.apache.poi.xwpf.usermodel.XWPFRun;
 
 public class CPU extends PC_Info {
 
-    private static final String wmic_cpu_get = "wmic cpu ";
+    private static final String wmic_cpu_get = "wmic cpu get ";
 
     enum CPUParameters {
         AddressWidth,
@@ -59,13 +59,13 @@ public class CPU extends PC_Info {
 
 
         System.out.println("\n *********************** CPU Information ***********************  ");
-        getFullInfoAboutCurrentParameter(wmic_cpu_get + "get", CPUParameters.values(), document);
+        getFullInfoAboutCurrentParameter(wmic_cpu_get, CPUParameters.values(), document);
 
     }
 
     @Override
     public void showComponent() {
-        getCommandOutput(wmic_cpu_get);
+        getCommandOutput(wmic_cpu_get + "* /format:list");
     }
 
 }

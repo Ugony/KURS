@@ -8,7 +8,7 @@ import org.apache.poi.xwpf.usermodel.XWPFRun;
 
 public class HardwareDisk extends PC_Info {
 
-    private static final String wmic_diskdrive_get = "wmic diskdrive ";
+    private static final String wmic_diskdrive_get = "wmic diskdrive get ";
 
 
     enum HDD_Parameters {
@@ -73,13 +73,13 @@ public class HardwareDisk extends PC_Info {
         run.setText("\n *********************** HardwareDisk Information ***********************  ");
 
         System.out.println("\n *********************** HardDrive Information ***********************  ");
-        getFullInfoAboutCurrentParameter(wmic_diskdrive_get + "get", HDD_Parameters.values(),  document);
+        getFullInfoAboutCurrentParameter(wmic_diskdrive_get , HDD_Parameters.values(), document);
 
     }
 
     @Override
     public void showComponent() {
-        getCommandOutput(wmic_diskdrive_get);
+        getCommandOutput(wmic_diskdrive_get + "* /format:list");
     }
 
 }

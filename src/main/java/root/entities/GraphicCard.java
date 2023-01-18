@@ -10,7 +10,7 @@ import org.apache.poi.xwpf.usermodel.XWPFRun;
 
 public class GraphicCard extends PC_Info {
 
-    private static final String wmic_path_Win32_Videocontroller_get = "wmic path Win32_Videocontroller ";
+    private static final String wmic_path_Win32_Videocontroller_get = "wmic path Win32_Videocontroller get ";
 
     enum GraphicCard_Parameters {
         AdapterCompatibility,
@@ -61,8 +61,7 @@ public class GraphicCard extends PC_Info {
 
         System.out.println(
                 "\n *********************** GraphicCard Information ***********************  ");
-        getFullInfoAboutCurrentParameter(wmic_path_Win32_Videocontroller_get +
-                "get",
+        getFullInfoAboutCurrentParameter(wmic_path_Win32_Videocontroller_get ,
                 GraphicCard_Parameters.values(),
                 document);
 
@@ -70,7 +69,7 @@ public class GraphicCard extends PC_Info {
 
     @Override
     public void showComponent() {
-        getCommandOutput(wmic_path_Win32_Videocontroller_get);
+        getCommandOutput(wmic_path_Win32_Videocontroller_get + "* /format:list");
     }
 
 }

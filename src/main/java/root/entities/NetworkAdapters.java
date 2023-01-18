@@ -6,7 +6,7 @@ import org.apache.poi.xwpf.usermodel.XWPFRun;
 
 public class NetworkAdapters extends PC_Info {
 
-    private static final String wmic_nic_get = "wmic nic ";
+    private static final String wmic_nic_get = "wmic nic get ";
 
     enum Parameter_Adapter {
         AdapterType,
@@ -62,7 +62,7 @@ public class NetworkAdapters extends PC_Info {
         System.out.println("\n *********************** Network adapters Information ***********************  ");
 
         getFullInfoAboutCurrentParameter(
-                wmic_nic_get + "get",
+                wmic_nic_get ,
                 Parameter_Adapter.values(),
                 document);
 
@@ -70,7 +70,7 @@ public class NetworkAdapters extends PC_Info {
 
     @Override
     public void showComponent() {
-        getCommandOutput(wmic_nic_get);
+        getCommandOutput(wmic_nic_get + "* /format:list");
     }
 
 }

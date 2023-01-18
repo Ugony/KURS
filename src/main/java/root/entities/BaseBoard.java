@@ -9,7 +9,7 @@ import org.apache.poi.xwpf.usermodel.XWPFRun;
 
 public class BaseBoard extends PC_Info {
 
-    private static final String wmic_baseboard_get = "wmic baseboard";
+    private static final String wmic_baseboard_get = "wmic baseboard get ";
 
     enum BaseBoard_Parameters {
         Caption,
@@ -56,7 +56,7 @@ public class BaseBoard extends PC_Info {
                 "\n *********************** BaseBoard Information ***********************  ");
 
         getFullInfoAboutCurrentParameter(
-                wmic_baseboard_get + " get",
+                wmic_baseboard_get,
                 BaseBoard_Parameters.values(),
                 document);
 
@@ -64,7 +64,7 @@ public class BaseBoard extends PC_Info {
 
     @Override
     public void showComponent() {
-        getCommandOutput(wmic_baseboard_get);
+        getCommandOutput(wmic_baseboard_get + "* /format:list");
     }
 }
 
